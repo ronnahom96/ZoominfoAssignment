@@ -1,20 +1,29 @@
 {
-  "name": "ZoominfoAssignment",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ronnahom96/ZoominfoAssignment.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ronnahom96/ZoominfoAssignment/issues"
-  },
-  "homepage": "https://github.com/ronnahom96/ZoominfoAssignment#readme"
+    "name": "ZoominfoAssignment",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ronnahom96/ZoominfoAssignment.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ronnahom96/ZoominfoAssignment/issues"
+    },
+    "homepage": "https://github.com/ronnahom96/ZoominfoAssignment#readme",
+    "dependencies": {
+        "axios": "^0.19.2",
+        "express": "^4.17.1",
+        "fetch": "^1.1.0",
+        "ip": "^1.1.5",
+        "nodejs-traceroute": "^1.2.0",
+        "ping": "^0.2.3"
+    }
 }
