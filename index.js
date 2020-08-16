@@ -1,28 +1,10 @@
-const express = require('express');
-const app = express();
 const { select } = require('./cdn');
-const port = 3000;
-const axios = require('axios');
 
-app.get('/', async (req, res) => {
+async function main() {
     const serve = await select();
-    await serve('/stat');
-    res.send('home');
-})
+    const result = await serve('/api/fetch-items');
 
-app.get('/users', (req, res) => {
-    const serve = select();
+    console.log(result);
+}
 
-    res.send('users');
-})
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})
-
-// async function main() {
-//     const serve = await select();
-//     // await serve('/api/fetch-items');
-// }
-
-// main();
+main();

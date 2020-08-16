@@ -1,5 +1,4 @@
 const axios = require('axios');
-const ip = require("ip");
 const ping = require('ping');
 
 const CDN_SERVERS = ["domain1.org", "domain2.org", "domain3.org"];
@@ -7,15 +6,13 @@ const CDN_ORG = "orgdomain.com";
 
 exports.select = async () => {
     // Send ping to all servers
-    const servers = await getDataFromServers(CDN_SERVERS);
+    const serversData = await getDataFromServers(CDN_SERVERS);
 
     // Get the alive servers
-    const aliveServers = servers.filter(({ alive }) => alive);
+    const aliveServers = serversData.filter(({ alive }) => alive);
 
     // Sort by time
-    aliveServers.sort(compareServer);
-
-    printServersData(aliveServers);
+    aliveServers.sort((serverA, serverB) => serverA.time > serverB.time ? 1 : -1);
 
     const sortCdnServers = aliveServers.map(server => server.host);
 
@@ -24,11 +21,11 @@ exports.select = async () => {
 
 async function fetchDataFromServers(content, cdnServers, originCdn) {
     // Fetch data
-    const status = '';
+    let status;
+    let result;
     let serverIndex = 0;
-    let result = '';
 
-    while (status === 200 && serverIndex < CDN_SERVERS.length) {
+    while (status !== 200 && serverIndex < cdnServers.length) {
         try {
             result = await axios.get(`http://${cdnServers[serverIndex]}${content}`);
             status = result.status;
@@ -37,7 +34,7 @@ async function fetchDataFromServers(content, cdnServers, originCdn) {
         }
     }
 
-    if (result === '') {
+    if (!status) {
         result = await axios.get(`http://${originCdn}${content}`);
     }
 
@@ -52,17 +49,4 @@ async function getDataFromServers(CDN_SERVERS) {
 
 function printServersData(servers) {
     servers.forEach(({ host, alive, time }) => console.log(host, alive, time));
-}
-
-function compareServer(serverA, serverB) {
-    const timeA = serverA.time;
-    const timeB = serverB.time;
-
-    if (timeA > timeB) {
-        return 1;
-    } else if (timeA < timeB) {
-        return -1;
-    }
-
-    return 1;
 }
