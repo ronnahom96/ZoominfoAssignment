@@ -1,8 +1,6 @@
 const axios = require('axios');
 const ping = require('ping');
-
-const CDN_SERVERS = ["domain1.org", "domain2.org", "domain3.org"];
-const CDN_ORG = "orgdomain.com";
+const { CDN_SERVERS, CDN_ORG } = require('./constants/constants');
 
 exports.select = async () => {
     // Send ping to all servers
@@ -45,8 +43,4 @@ async function getDataFromServers(CDN_SERVERS) {
     return await Promise.all(CDN_SERVERS.map(server => {
         return ping.promise.probe(server);
     }));
-}
-
-function printServersData(servers) {
-    servers.forEach(({ host, alive, time }) => console.log(host, alive, time));
 }
